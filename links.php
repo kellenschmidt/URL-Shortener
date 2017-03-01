@@ -54,7 +54,7 @@ if ((int) $_SERVER['CONTENT_LENGTH'] != 0) {
 	// Test whether URL code is already in use or not
     function isUnusedCode($testCode)
     {
-        $db = mysqli_connect('localhost', 'root', 'g9z9wCPG8xG8^yi*', 'link_shortner') or die('Error connecting to MySQL server.');
+        $db = mysqli_connect('localhost', 'root', 'PASSWORD_HERE', 'link_shortner') or die('Error connecting to MySQL server.');
         $codesQuery = 'SELECT code FROM links';
         $getCodes = mysqli_query($db, $codesQuery) or die('Error querying database for codes.');
         while ($row = mysqli_fetch_array($getCodes)) {
