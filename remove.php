@@ -1,5 +1,5 @@
 <?php
- $db = mysqli_connect('localhost','root','g9z9wCPG8xG8^yi*','link_shortner') or die('Error connecting to MySQL server.');
+ $db = mysqli_connect('localhost','root','PASSWORD_HERE','link_shortner') or die('Error connecting to MySQL server.');
  
  // Create and execute query to remove URL from database using code from GET parameter
  $removeQuery = 'DELETE FROM links WHERE code="' . $_GET['code'] . '"';
