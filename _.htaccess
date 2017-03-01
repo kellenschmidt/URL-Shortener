@@ -1,0 +1,10 @@
+/* Note: In order for this file to function:
+ * 1) The '_' must be removed from the file name
+ * 2) Follow these instructions: http://52.34.61.64/58a
+ * 3) Remove these comments
+ */
+
+RewriteEngine on
+RewriteBase /
+RewriteRule ^(links|)/?$ links.php
+RewriteRule ^([A-Za-z0-9]+)/?$ shortener.php?b=$1
