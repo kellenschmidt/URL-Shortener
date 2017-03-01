@@ -1,0 +1,170 @@
+/* Header ********************************************/
+
+body {
+ margin: 0;
+}
+
+.kellen-logo {
+ font-family: Roboto;
+ font-weight: 400;
+ display: inline-block;
+ font-size: 22px;
+ margin: 20px 0 18px 235px;
+}
+
+#k {
+ color: #4885ed;
+ display: inline;
+}
+
+#e1 {
+ color: #db3236;
+}
+
+#l1 {
+ color: #f4c20d;
+}
+
+#l2 {
+ color: #4885ed;
+}
+
+#e2 {
+ color: #3cba54;
+}
+
+#n {
+ color: #db3236;
+}
+
+#title {
+ color: black;
+ opacity: 0.54;
+ font-family: 'Product Sans',Arial,sans-serif;
+ padding: 0 0 0 8px;
+}
+
+.link-data {
+ background: #366ed1;
+ height: 158px;
+ padding: 35px 20px 0 305px;
+ display: block;
+ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+#link-data-heading {
+ margin: 0 0 15px 0;
+ font-family: Roboto;
+ font-weight: 300;
+ font-size: 30px;
+ color: white;
+}
+
+#url-input {
+ height: 36px;
+ margin: 0 14px 0 0;
+ padding:  0 0 0 14px;
+ width: 582px;
+ font-size: 13px;
+ border: 0;
+ border-radius: 2px;
+ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+#url-input:focus {
+ outline: 0;
+}
+
+#link-button {
+ background: white;
+ color: #039be5;
+ height: 36px;
+ padding: 0 18px;
+ font-family: Roboto;
+ font-weight: 500;
+ font-size: 14px;
+ text-transform: uppercase;
+ border: 0;
+ border-radius: 2px;
+ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+#new-link {
+ font-family: Roboto;
+ font-size: 30px;
+ margin: 0 0 7px 0;
+ background: #eee;
+ padding: 9px 18px;;
+ border-radius: 2px;
+ display: inline-block;
+ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+#new-link > a{
+ color: #444;
+}
+
+#home-btn {
+ color: white;
+ font-family: Roboto;
+ font-weight: 300;
+ }
+
+/* Table ****************************************/
+
+#links-table {
+ margin: 40px 300px;
+ font-family: Roboto;
+ border-collapse: collapse;
+ text-align: left;
+ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+th {
+ background: #F5F5F5;
+ font-size: 12px;
+ font-weight: 500;
+ height: 48px;
+ padding: 0 18px 0 24px;
+ color: rgba(0,0,0,0.54);
+}
+
+td {
+ font-size: 13px;
+ white-space: nowrap;
+ padding: 17px 18px 17px 24px;
+ border-top: 1px solid rgba(0, 0, 0, 0.117647);
+ border-bottom: 1px solid rgba(0, 0, 0, 0.117647);
+}
+
+tfoot {
+ background: #F5F5F5;
+}
+
+a {
+ color: #039be5;
+}
+
+a:hover {
+ color: #039be5;
+}
+
+.truncate {
+ display: inline-block;
+ width: 550px;
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
+.remove-btn {
+ border: 0;
+ background: 0;
+ cursor: pointer;
+ text-decoration: none;
+ color: black;
+}
+
+.remove-btn:hover {
+ color: red;
+}
