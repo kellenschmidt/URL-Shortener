@@ -9,6 +9,6 @@
  mysqli_close($db);
 
  // Link back to main links.php page
- $homePage = '//52.34.61.64/links.php';
+ $homePage = '//kellenschmidt.com/links.php';
  header('Location: ' . $homePage);
 ?>
