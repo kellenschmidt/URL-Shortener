@@ -124,21 +124,24 @@ $totalClicks = 0;
 
 // Display data for each URL
 while ($row = mysqli_fetch_array($getLinks)) {
-    echo '<tr>';
-    echo '<td class="truncate"><a href="' . $row['long_url'] . '">' . $row['long_url'] . '</a></td>';
-    
-    $date = date_create($row['date_created']);
-    echo '<td>' . date_format($date, 'M j, Y') . '</td>';
-    $shortUrl = $siteURL . $row['code'];
-    echo '<td><a href="' . $shortUrl . '">' . $shortUrl . '</a></td>';
-    echo '<td>' . $row['count'] . '</td>';
-	// Add click count to total clicks
-    $totalClicks = $totalClicks + $row['count'];
-    
-	// Create button to remove from database
-	// Links to a different php file and passes the URL code as a parameter
-    echo '<td><a class="remove-btn" href="remove.php?code=' . $row['code'] . '">X</a></td>';
-    echo '</tr>';
+    // Only display row if visibility is 1
+    if($row['visible'] == 1) {
+        echo '<tr>';
+        echo '<td class="truncate"><a href="' . $row['long_url'] . '">' . $row['long_url'] . '</a></td>';
+        
+        $date = date_create($row['date_created']);
+        echo '<td>' . date_format($date, 'M j, Y') . '</td>';
+        $shortUrl = $siteURL . $row['code'];
+        echo '<td><a href="' . $shortUrl . '">' . $shortUrl . '</a></td>';
+        echo '<td>' . $row['count'] . '</td>';
+        // Add click count to total clicks
+        $totalClicks = $totalClicks + $row['count'];
+        
+        // Create button to remove from database
+        // Links to a different php file and passes the URL code as a parameter
+        echo '<td><a class="remove-btn" href="remove.php?code=' . $row['code'] . '">X</a></td>';
+        echo '</tr>';
+    }
 }
 ?>
 
