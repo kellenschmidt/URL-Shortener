@@ -7,4 +7,4 @@
 RewriteEngine on
 RewriteBase /
 RewriteRule ^(links|)/?$ links.php
-RewriteRule ^([A-Za-z0-9]+)/?$ shortener.php?b=$1
+RewriteRule ^([A-Za-z0-9]+)/?$ redirect.php?code=$1
