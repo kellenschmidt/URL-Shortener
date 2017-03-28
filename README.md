@@ -3,7 +3,7 @@ Take long URLs and compress them into short links which are easy to share, tweet
 
 Created entirely from scratch using PHP, HTML, and a SQL database.
 
-## Shorten a URL
+### Shorten a URL
 1. Visit [kellenschmidt.com](kellenschmidt.com)
 2. Enter your long URL
 3. Click the shorten button
