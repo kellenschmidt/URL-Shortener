@@ -1,7 +1,7 @@
 <?php
-// Connect to database
-$db = mysqli_connect('localhost', 'root', 'PASSWORD_HERE', 'link_shortner') or die('Error connecting to MySQL server.');
-$siteURL = 'http://kellenschmidt.com/';
+ // Connect to database
+ $db = mysqli_connect('localhost','root','PASSWORD','link_shortner') or die('Error connecting to MySQL server.');
+ $siteURL = 'http://kellenschmidt.com/';
 ?>
 
 <html>
@@ -15,21 +15,23 @@ $siteURL = 'http://kellenschmidt.com/';
  <body>
 
  <!-- Header of page: "Kellen URL Shortner" -->
+
  <header>
  <div class="kellen-logo">
   <span id="k">K</span><span id="e1">e</span><span id="l1">l</span><span id="l2">l</span><span id="e2">e</span><span id="n">n</span><span id="title">URL Shortener</span>
  </header>
 
  <!-- Link input and output -->
+
   <?php
-// Display screen to enter new link when no there are no GET arguments
-if ((int) $_SERVER['CONTENT_LENGTH'] == 0) {
+   // Display screen to enter new link when no there are no GET arguments
+   if((int) $_SERVER['CONTENT_LENGTH'] == 0) {
     $inputDisplayVal = 'inherit';
-} else {
+   } else {
     $inputDisplayVal = 'none';
-}
-echo '<div style="display:' . $inputDisplayVal . '">';
-?>
+   }
+   echo '<div style="display:' . $inputDisplayVal . '">';
+  ?>
    <div>
      <!-- "action" property of the form redirects to the supplied file when submit button is clicked -->
      <form action="links.php" method="post" class="link-data">
@@ -44,58 +46,78 @@ echo '<div style="display:' . $inputDisplayVal . '">';
     </div>
    </div>
  </div>
-
  <?php
-// Display screen with newly created short URL when there are GET arguments
-if ((int) $_SERVER['CONTENT_LENGTH'] != 0) {
-    $outputDisplayVal = 'inherit';
-    $longUrl          = $_POST['longUrl'];
+  // Display screen with newly created short URL when there are GET arguments
+  if((int) $_SERVER['CONTENT_LENGTH'] != 0) {
+   $outputDisplayVal = 'inherit';
+   $longUrl = $_POST['longUrl'];
+
+   // Prepend long url with http:// if it doesn't have it already'
+   if(substr($longUrl, 0, 4) != 'http') {
+    $longUrl = 'http://' . $longUrl;
+   }
+
+   // Get timestamp
+   function getDatetime() {
+    date_default_timezone_set('America/Chicago');
+    return date('Y-m-d H:i:s');
+   }
+   
+   // Create and execute query to get code of long url if it is already in the database
+   $existingUrlQuery = 'SELECT code FROM links WHERE long_url="' . $longUrl  . '"';
+   $getExistingLink = mysqli_query($db, $existingUrlQuery) or die('Error querying database for existing url');
+   $row = mysqli_fetch_array($getExistingLink);
+   // If code is already in database update timestamp and make visible
+   if($row != NULL) {
+    $code = $row['code'];
+    $shortUrl = $siteURL . $code;
+    $date = getDatetime();
+    // Create and execute query to update creation date and visibility for given code
+    $updateExistingUrlQuery = 'UPDATE links SET date_created="' . $date . '", visible=1 WHERE code="' . $code . '"';
+    mysqli_query($db, $updateExistingUrlQuery) or die('Error querying database to update existing url');
+   }
+   // Else code is not already in database
+   else {
     
-	// Test whether URL code is already in use or not
-    function isUnusedCode($testCode)
-    {
-        $db = mysqli_connect('localhost', 'root', 'PASSWORD_HERE', 'link_shortner') or die('Error connecting to MySQL server.');
-        $codesQuery = 'SELECT code FROM links';
-        $getCodes = mysqli_query($db, $codesQuery) or die('Error querying database for codes.');
-        while ($row = mysqli_fetch_array($getCodes)) {
-            if ($row['code'] == $testCode) {
-                return False;
-            }
-        }
-        return True;
+    // Test whether URL code is already in use or not
+    function isUnusedCode($testCode) {
+     $db = mysqli_connect('localhost','root','PASSWORD','link_shortner') or die('Error connecting to MySQL server.');
+     // Create and execute query to get all codes in database
+     $codesQuery = 'SELECT code FROM links';
+     $getCodes = mysqli_query($db, $codesQuery) or die('Error querying database for codes.');
+     while ($row = mysqli_fetch_array($getCodes)) {
+      if ($row['code'] == $testCode) {
+       return False;
+      }
+     }
+     return True;
     }
-    
-	// Generate new URL code
+
+    // Generate new URL code
     do {
-        $code = substr(md5(microtime()), rand(0, 26), 3);
+     $code = substr(md5(microtime()),rand(0,26),3);
     } while (isUnusedCode($code) == False);
-    
+
     // Creates short URL with the form http://example.com/<code>
     // Uses mod_rewite in .htaccesss to redirect this to http://example.com/shortener.php?b=<code>
     $shortUrl = $siteURL . $code;
-    date_default_timezone_set('America/Chicago');
-    $date        = date('Y-m-d H:i:s');
-	// Create query to add new URL to database
-    $insertQuery = 'INSERT INTO links (code, long_url, date_created, count) VALUES ("' . $code . '","' . $longUrl . '","' . $date . '",0)';
-} else {
-    $outputDisplayVal = 'none';
-}
-echo '<div style="display:' . $outputDisplayVal . '">';
-?>
-
+    $date = getDatetime();
+    // Create and execute query to add new URL to database
+    $insertQuery = 'INSERT INTO links (code, long_url, date_created, count) VALUES ("' . $code . '","' . $longUrl .'","' . $date . '",0)';
+    mysqli_query($db, $insertQuery) or die('Error querying database to insert');
+   }
+  } else {
+   $outputDisplayVal = 'none';
+  }
+  echo '<div style="display:' . $outputDisplayVal . '">';
+ ?>
   <div class="link-data">
    <p id="link-data-heading">Your short URL</p>
    <p id="new-link">
-
    <?php
-// Execute query to add to database and print short URL
-if (mysqli_query($db, $insertQuery)) {
+    // Display new short url
     echo $shortUrl;
-} else {
-    echo "Error: " . $insertQuery . "<br>" . mysqli_error($db);
-}
-?>
-
+   ?>
    </p>
    <br/>
    <a id="home-btn" href="links.php">Go back</a>
@@ -115,36 +137,52 @@ if (mysqli_query($db, $insertQuery)) {
    </thead>
 
    <tbody>
-
    <?php
-// Create and execute query to get information about URL from database
-$linkQuery = 'SELECT * FROM links ORDER BY date_created DESC';
-$getLinks = mysqli_query($db, $linkQuery) or die('Error querying database for links.');
-$totalClicks = 0;
+    // Create and execute query to get information about URL from database
+    $linkQuery = 'SELECT * FROM links ORDER BY date_created DESC';
+    $getLinks = mysqli_query($db, $linkQuery) or die('Error querying database for links.');
+    $totalClicks = 0;
 
-// Display data for each URL
-while ($row = mysqli_fetch_array($getLinks)) {
-    // Only display row if visibility is 1
-    if($row['visible'] == 1) {
-        echo '<tr>';
-        echo '<td class="truncate"><a href="' . $row['long_url'] . '">' . $row['long_url'] . '</a></td>';
-        
-        $date = date_create($row['date_created']);
-        echo '<td>' . date_format($date, 'M j, Y') . '</td>';
-        $shortUrl = $siteURL . $row['code'];
-        echo '<td><a href="' . $shortUrl . '">' . $shortUrl . '</a></td>';
-        echo '<td>' . $row['count'] . '</td>';
-        // Add click count to total clicks
-        $totalClicks = $totalClicks + $row['count'];
-        
-        // Create button to remove from database
-        // Links to a different php file and passes the URL code as a parameter
-        echo '<td><a class="remove-btn" href="remove.php?code=' . $row['code'] . '">X</a></td>';
-        echo '</tr>';
+    // Display data for each URL
+    while ($row = mysqli_fetch_array($getLinks)) {
+     // Only display row if visibility is 1
+     if($row['visible'] == 1) {
+
+       echo '<tr>';
+       echo '<td class="truncate"><a href="' . $row['long_url'] . '">' . $row['long_url'] . '</a></td>';
+
+  /* $date = new DateTime($row['date_created']);
+     $now = new DateTime(date('Y-m-d H:i:s'));
+     $diff = $date->diff($now);
+     $minutes = $diff->days * 24 * 60;
+     $minutes += $diff->h * 60;
+     $minutes += $diff->i;
+     echo '<td>';
+     if ($minutes >= 60*24) {
+      echo $date->format('M j, Y');
+     } else if ($minutes >= 60) {
+      echo $date->h . ' hours ago';
+     } else if ($minutes > 0) {
+      echo $date->i . ' minutes ago';
+     } else {
+      echo $date->s . ' seconds ago';
+     }*/
+
+       $date = date_create($row['date_created']);
+       echo '<td>' . date_format($date, 'M j, Y') . '</td>';
+       $shortUrl = $siteURL . $row['code'];
+       echo '<td><a href="' . $shortUrl . '">' . $shortUrl . '</a></td>';
+       echo '<td>' . $row['count'] . '</td>';
+       // Add click count to total clicks
+       $totalClicks = $totalClicks + $row['count'];
+
+       // Create button to remove from database
+       // Links to a different php file and passes the URL code as a parameter
+       echo '<td><a class="remove-btn" href="remove.php?code=' . $row['code'] . '">X</a></td>';
+       echo '</tr>';
+     }
     }
-}
-?>
-
+   ?>
    </tbody>
 
    <tfoot>
@@ -153,15 +191,10 @@ while ($row = mysqli_fetch_array($getLinks)) {
      <td></td>
      <td></td>
      <td><strong>
-
       <?php
-// Print total number of clicks at bottom of table
-echo $totalClicks;
-
-// Close database
-mysqli_close($db);
-?>
-
+       // Print total number of clicks at bottom of table
+       echo $totalClicks;
+      ?>
      </strong></td>
      <td></td>
     </tr>
@@ -170,3 +203,5 @@ mysqli_close($db);
  </div>
  </body>
  </html>
+
+
