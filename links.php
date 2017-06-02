@@ -1,7 +1,7 @@
 <?php
  // Connect to database
  $db = mysqli_connect('localhost','root','PASSWORD','link_shortner') or die('Error connecting to MySQL server.');
- $siteURL = 'http://kellenschmidt.com/';
+ $siteURL = 'https://kellenschmidt.com/';
 ?>
 
 <html>
