@@ -15,4 +15,4 @@ Uses Apache's mod_rewrite and .htaccess functionality to rewrite URLs
 
 ### Deprecated
 
-<img src="https://varahund.files.wordpress.com/2016/06/varning.jpg" width=24/>  This version of the URL shortener is no longer in use and has been replaced by a redesigned [Angular version](https://github.com/kellenschmidt/URL-Shortener-Angular)
+<img src="https://varahund.files.wordpress.com/2016/06/varning.jpg" width=24/>  This version of the URL shortener is no longer in use and has been replaced by a redesigned [Angular version](https://github.com/kellenschmidt/urlshortener.kellenschmidt.com)
