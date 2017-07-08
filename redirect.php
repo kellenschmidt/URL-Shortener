@@ -1,6 +1,6 @@
 <?php
    $db = mysqli_connect('localhost','root','PASSWORD','link_shortner') or die('Error connecting to MySQL server.');
-   $siteURL = 'https://kellenschmidt.com/';
+   $siteURL = 'https://kellenschmidt.com/php/';
 
    // Retrieve code from GET parameter
    $code = $_GET['code'];

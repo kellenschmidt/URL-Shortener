@@ -6,6 +6,6 @@
  mysqli_query($db, $removeQuery) or die('Error querying database.');
 
  // Link back to main links.php page
- $homePage = '//kellenschmidt.com/links.php';
+ $homePage = 'https://urlshortenerphp.kellenschmidt.com/';
  header('Location: ' . $homePage);
 ?>

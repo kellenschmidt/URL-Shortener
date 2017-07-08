@@ -1,7 +1,13 @@
 <?php
  // Connect to database
  $db = mysqli_connect('localhost','root','PASSWORD','link_shortner') or die('Error connecting to MySQL server.');
- $siteURL = 'https://kellenschmidt.com/';
+ $siteURL = 'https://kellenschmidt.com/php/';
+
+ // Get timestamp
+ function getDatetime() {
+  date_default_timezone_set('America/Chicago');
+  return date('Y-m-d H:i:s');
+ }
 ?>
 
 <html>
@@ -55,12 +61,6 @@
    // Prepend long url with http:// if it doesn't have it already'
    if(substr($longUrl, 0, 4) != 'http') {
     $longUrl = 'http://' . $longUrl;
-   }
-
-   // Get timestamp
-   function getDatetime() {
-    date_default_timezone_set('America/Chicago');
-    return date('Y-m-d H:i:s');
    }
    
    // Create and execute query to get code of long url if it is already in the database
@@ -171,7 +171,7 @@
        $date = date_create($row['date_created']);
        echo '<td>' . date_format($date, 'M j, Y') . '</td>';
        $shortUrl = $siteURL . $row['code'];
-       echo '<td><a href="' . $shortUrl . '">' . $shortUrl . '</a></td>';
+       echo '<td><a href="' . $shortUrl . '">' . substr($shortUrl, 8) . '</a></td>';
        echo '<td>' . $row['count'] . '</td>';
        // Add click count to total clicks
        $totalClicks = $totalClicks + $row['count'];
