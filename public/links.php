@@ -1,6 +1,6 @@
 <?php
  // Connect to database
- $db = mysqli_connect('localhost','root','PASSWORD','link_shortner') or die('Error connecting to MySQL server.');
+ $db = mysqli_connect('localhost','root','P!24!XEaLp4j!J8F','link_shortner') or die('Error connecting to MySQL server.');
  $siteURL = 'https://kellenschmidt.com/php/';
 
  // Get timestamp
@@ -81,7 +81,7 @@
     
     // Test whether URL code is already in use or not
     function isUnusedCode($testCode) {
-     $db = mysqli_connect('localhost','root','PASSWORD','link_shortner') or die('Error connecting to MySQL server.');
+     $db = mysqli_connect('localhost','root','P!24!XEaLp4j!J8F','link_shortner') or die('Error connecting to MySQL server.');
      // Create and execute query to get all codes in database
      $codesQuery = 'SELECT code FROM links';
      $getCodes = mysqli_query($db, $codesQuery) or die('Error querying database for codes.');
