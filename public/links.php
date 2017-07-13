@@ -1,6 +1,6 @@
 <?php
  // Connect to database
- $db = mysqli_connect('localhost','root','P!24!XEaLp4j!J8F','link_shortner') or die('Error connecting to MySQL server.');
+ $db = mysqli_connect('localhost','root',getenv('MYSQL_PASS'),'link_shortner') or die('Error connecting to MySQL server.');
  $siteURL = 'https://kellenschmidt.com/php/';
 
  // Get timestamp
@@ -8,6 +8,32 @@
   date_default_timezone_set('America/Chicago');
   return date('Y-m-d H:i:s');
  }
+
+ // Log page visit
+ /*
+ function logInteraction() {
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    preg_match('#\((.*?)\)#', $user_agent, $match);
+    $operating_system = $match[1];
+    $start = strrpos($user_agent, ')') + 2;
+    $end = strrpos($user_agent, ' ');
+    $browser = substr($user_agent, $start, $end-$start);
+    $date = getDatetime();
+
+    $type = 0;
+    $ip_address = "test";
+    $operating_system = "test2";
+    $browser = "test3";
+    $date = "1-1-1 1:1:1";
+
+    // $logInteractionQuery = 'INSERT INTO interactions (interaction_type, ip_address, browser, operating_system, "date") VALUES (0, "' . $ip_address . '","' . $browser . '","' . $operating_system . '","' . $date . '")';
+    $logInteractionQuery = 'INSERT INTO interactions SET interaction_type = 0, ip_address = "' . $ip_address . '", browser = "' . $browser . '", operating_system = "' . $operating_system . '", interaction_date = "' . $date . '")';
+    // $logInteractionQuery = 'INSERT INTO interactions (interaction_type, ip_address, browser, operating_system, interaction_date) VALUES (0,"' . $type . '","' . $ip_address .'","' . $browser . '","' . $operating_system .'","' . $date .'")';
+    mysqli_query($db, $logInteractionQuery) or die('Error querying database to log interaction');
+}
+
+logInteraction();*/
 ?>
 
 <html>
@@ -81,7 +107,7 @@
     
     // Test whether URL code is already in use or not
     function isUnusedCode($testCode) {
-     $db = mysqli_connect('localhost','root','P!24!XEaLp4j!J8F','link_shortner') or die('Error connecting to MySQL server.');
+     $db = mysqli_connect('localhost','root','ph@X$91PAl27u&or','link_shortner') or die('Error connecting to MySQL server.');
      // Create and execute query to get all codes in database
      $codesQuery = 'SELECT code FROM links';
      $getCodes = mysqli_query($db, $codesQuery) or die('Error querying database for codes.');
