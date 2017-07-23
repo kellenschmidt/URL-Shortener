@@ -39,7 +39,6 @@ logInteraction();*/
 <html>
  <head>
   <title>Kellen's URL Shortener</title>
-  <!--<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
   <link href='//fonts.googleapis.com/css?family=Roboto|Roboto:300|Roboto:500' rel='stylesheet'>
   <link href="styles.css" rel="stylesheet" type="text/css"/>
  </head>
@@ -57,7 +56,7 @@ logInteraction();*/
 
   <?php
    // Display screen to enter new link when no there are no GET arguments
-   if((int) $_SERVER['CONTENT_LENGTH'] == 0) {
+   if(empty($_SERVER['CONTENT_LENGTH'])) {
     $inputDisplayVal = 'inherit';
    } else {
     $inputDisplayVal = 'none';
@@ -79,8 +78,9 @@ logInteraction();*/
    </div>
  </div>
  <?php
+  $shortUrl = "";
   // Display screen with newly created short URL when there are GET arguments
-  if((int) $_SERVER['CONTENT_LENGTH'] != 0) {
+  if(isset($_SERVER['CONTENT_LENGTH'])) {
    $outputDisplayVal = 'inherit';
    $longUrl = $_POST['longUrl'];
 
@@ -107,7 +107,7 @@ logInteraction();*/
     
     // Test whether URL code is already in use or not
     function isUnusedCode($testCode) {
-     $db = mysqli_connect('localhost','root','ph@X$91PAl27u&or','link_shortner') or die('Error connecting to MySQL server.');
+     $db = mysqli_connect('localhost','root',getenv('MYSQL_PASS'),'link_shortner') or die('Error connecting to MySQL server.');
      // Create and execute query to get all codes in database
      $codesQuery = 'SELECT code FROM links';
      $getCodes = mysqli_query($db, $codesQuery) or die('Error querying database for codes.');
